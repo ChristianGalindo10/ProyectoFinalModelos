@@ -12,6 +12,6 @@ import javax.swing.ImageIcon;
  * @author Christian Galindo
  */
 public interface Especificacion {
-    void dibuja();
-    void click();
+    void dibuja(ImageIcon i);
+    void click(ImageIcon i);
 }

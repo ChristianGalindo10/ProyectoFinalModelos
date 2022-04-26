@@ -5,6 +5,8 @@
  */
 package estructurales.proxy;
 
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author Christian Galindo
@@ -14,17 +16,17 @@ public class EspecificacionProxy implements Especificacion{
     protected RealEspecificacion especificacion = null;
 
     @Override
-    public void click() {
+    public void click(ImageIcon i) {
         if (especificacion == null) {
             especificacion = new RealEspecificacion();
-            especificacion.carga();
+            especificacion.carga(i);
         }
     }
 
     @Override
-    public void dibuja() {
+    public void dibuja(ImageIcon i) {
         if (especificacion != null){
-            especificacion.dibuja();
+            especificacion.dibuja(i);
         }
     }
 }

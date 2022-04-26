@@ -5,6 +5,7 @@
  */
 package estructurales.proxy;
 
+import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -15,17 +16,20 @@ import javax.swing.JOptionPane;
 public class RealEspecificacion implements Especificacion {
 
     @Override
-    public void dibuja() {
+    public void dibuja(ImageIcon i) {
+        ImageIcon img = i;
+        Image escalada = img.getImage().getScaledInstance(400, 400, Image.SCALE_DEFAULT);
+       ImageIcon imgesc = new ImageIcon(escalada);
         JOptionPane.showMessageDialog(null, null, "Previsualizacion", 
-                JOptionPane.INFORMATION_MESSAGE,carga());
+                JOptionPane.INFORMATION_MESSAGE,carga(imgesc));
     }
 
     @Override
-    public void click() {
+    public void click(ImageIcon i) {
     }
 
-    public ImageIcon carga() {
-        ImageIcon icono = new ImageIcon(getClass().getResource("/img/toyotaCorolla.gif"));
+    public ImageIcon carga(ImageIcon i) {
+        ImageIcon icono = i;
         return icono;
     }
 

@@ -16,10 +16,10 @@ public class Facade {
     private DocumentacionBlanco documentacionEnBlanco;
     private DocumentacionCliente documentacionCliente;
 
-    public Facade(String usuario, String descripcion, int precio) {
+    public Facade(String usuario, String descripcion, int precio, String placa) {
         documentacionEnBlanco = DocumentacionBlanco.Instance();
         incluir();
-        documentacionCliente = new DocumentacionCliente(usuario, descripcion, precio);
+        documentacionCliente = new DocumentacionCliente(usuario, descripcion, precio, placa);
     }
 
     public void incluir(){
