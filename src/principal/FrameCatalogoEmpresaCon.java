@@ -17,6 +17,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import comportamentales.state.*;
+import estructurales.proxy.Especificacion;
+import estructurales.proxy.EspecificacionProxy;
 
 /**
 
@@ -32,10 +34,15 @@ public class FrameCatalogoEmpresaCon extends javax.swing.JFrame {
     private int filiales;
     private ImageIcon[] imacars;
     private ImageIcon[] imascooters;
+    private ImageIcon[] gifcars;
+    private ImageIcon[] gifscooters;
     private context estado;
+    Especificacion especificacion = new EspecificacionProxy();
+    private generators gen;
        
     public FrameCatalogoEmpresaCon(String selection, int filiales) {
         initComponents();
+        gen = new generators();
         this.filiales = filiales;
         globalcounter = 0;
         this.selection = selection;
@@ -54,11 +61,12 @@ public class FrameCatalogoEmpresaCon extends javax.swing.JFrame {
         scooters = catalogo.getScooters();
         imacars = catalogo.getImageCars();
         imascooters = catalogo.getImageScooters();
+        gifcars = catalogo.getGifCars();
+        gifscooters = catalogo.getGifScooters();
         this.TablaCatalogoVehiculos.setModel(catalogo.tableVehicle());
         this.TablaCatalogoEscuters.setModel(catalogo.tableScooter());
     }
-
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -205,7 +213,11 @@ public class FrameCatalogoEmpresaCon extends javax.swing.JFrame {
         descrSortSc descriptors = new descrSortSc();
         int id = this.TablaCatalogoVehiculos.getSelectedRow();
         int ids = this.TablaCatalogoEscuters.getSelectedRow();
-        if(id != 1 && ids == -1){
+        if(id != -1 && ids == -1){
+            ImageIcon img = this.imacars[id];
+            Image escalada = img.getImage().getScaledInstance(this.LblImage.getWidth(), this.LblImage.getHeight(), Image.SCALE_DEFAULT);
+            ImageIcon imgesc = new ImageIcon(escalada);
+            this.LblImage.setIcon(imgesc);
         if(id % 2 == 0){
             AutoDecorador deco = new Mp3Player(auto[id]);
             descriptor.description(this.LblDescripcion, deco.getDescription(),deco.getPrecio(), id+1);
@@ -223,6 +235,10 @@ public class FrameCatalogoEmpresaCon extends javax.swing.JFrame {
         }
         else{
             if(ids != -1 && id == -1){
+                ImageIcon img = this.imascooters[ids];
+                Image escalada = img.getImage().getScaledInstance(this.LblImage.getWidth(), this.LblImage.getHeight(), Image.SCALE_DEFAULT);
+                ImageIcon imgesc = new ImageIcon(escalada);
+                this.LblImage.setIcon(imgesc);
                descriptors.description(this.LblDescripcion, scooters[ids].getDescription(),
                        scooters[ids].getPrecio(), ids+1);
             }
@@ -236,17 +252,7 @@ public class FrameCatalogoEmpresaCon extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_BtnDescripcionActionPerformed
     
-    private String generateReferenceCode(){
-        String code = "ECF";
-        int iterator = 0;
-        int rand;
-        while (iterator < 7){
-            rand = (int)Math.floor(Math.random()*9);
-            code = code + Integer.toString(rand);
-            iterator++;
-        }
-        return code;
-    }
+
     private void BtnCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCompraActionPerformed
         int id = this.TablaCatalogoVehiculos.getSelectedRow();
         int ids = this.TablaCatalogoEscuters.getSelectedRow();
@@ -269,7 +275,6 @@ public class FrameCatalogoEmpresaCon extends javax.swing.JFrame {
                 "Pago",JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, icon, Options, Options[0]);
         DefaultTableModel mod = (DefaultTableModel)this.TablaCatalogoVehiculos.getModel();
         if(Selection == 0){
-            System.out.println("Paga de contado");
             client = new ClienteContado();
             client.nuevoPedido(currentprice);          
             mod.removeRow(id);
@@ -277,13 +282,12 @@ public class FrameCatalogoEmpresaCon extends javax.swing.JFrame {
             
         }
         else{
-            System.out.println("Paga a crédito");
             client = new ClienteCredito();
             client.nuevoPedido(currentprice);
             mod.removeRow(id);
         }
-    Facade fac = new Facade("Petición usuario "+this.generateReferenceCode(),
-            auto[id].getDescription(),auto[id].getPrecio());
+    Facade fac = new Facade("Petición usuario "+gen.generateReferenceCode(),
+            auto[id].getDescription(),auto[id].getPrecio(), gen.generatePlaca());
     fac.incluir();
     fac.vender(); 
             try {
@@ -312,7 +316,6 @@ public class FrameCatalogoEmpresaCon extends javax.swing.JFrame {
                 "Pago",JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, icon, Options, Options[0]);
         DefaultTableModel mod = (DefaultTableModel)this.TablaCatalogoEscuters.getModel();
         if(Selection == 0){
-            System.out.println("Paga de contado");
             client = new ClienteContado();
             client.nuevoPedido(currentprice);          
             mod.removeRow(ids);
@@ -326,8 +329,8 @@ public class FrameCatalogoEmpresaCon extends javax.swing.JFrame {
             client.nuevoPedido(currentprice);
             mod.removeRow(ids);
         }
-    Facade fac = new Facade("Petición usuario "+this.generateReferenceCode(),
-            scooters[ids].getDescription(),scooters[ids].getPrecio())
+    Facade fac = new Facade("Petición usuario "+gen.generateReferenceCode(),
+            scooters[ids].getDescription(),scooters[ids].getPrecio(), gen.generatePlaca())
             ;
     fac.incluir();
     fac.vender();
@@ -365,22 +368,22 @@ public class FrameCatalogoEmpresaCon extends javax.swing.JFrame {
         int ids = this.TablaCatalogoEscuters.getSelectedRow();
         
         if(id!=-1 && ids == -1){
-            ImageIcon img = this.imacars[id];
-            Image escalada = img.getImage().getScaledInstance(this.LblImage.getWidth(), this.LblImage.getHeight(), Image.SCALE_DEFAULT);
-            ImageIcon imgesc = new ImageIcon(escalada);
-            this.LblImage.setIcon(imgesc);
+            especificacion.click(gifcars[id]);
+            especificacion.dibuja(gifcars[id]);
+
         }    
         else{
-            if(ids!= -1 && id == -1){           
-                ImageIcon img = this.imascooters[ids];
-                Image escalada = img.getImage().getScaledInstance(this.LblImage.getWidth(), this.LblImage.getHeight(), Image.SCALE_DEFAULT);
-                ImageIcon imgesc = new ImageIcon(escalada);
-                this.LblImage.setIcon(imgesc);
+            if(ids!= -1 && id == -1){ 
+            especificacion.click(gifscooters[ids]);
+            especificacion.dibuja(gifscooters[ids]);
+
             }
             else{
                 JOptionPane.showMessageDialog(null,"Quiza hayan elementos seleccionados mutuamente "
                         + "en las dos tablas, intente de nuevo"
                         + "","Advertencia",2);
+                        this.TablaCatalogoEscuters.clearSelection();
+                        this.TablaCatalogoVehiculos.clearSelection();
             }
         }
 

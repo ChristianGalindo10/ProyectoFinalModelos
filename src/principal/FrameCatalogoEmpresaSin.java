@@ -7,16 +7,21 @@ package principal;
 
 import comportamentales.responsability.descrSort;
 import comportamentales.responsability.descrSortSc;
+import comportamentales.state.*;
 import creacionales.abstractFactory.Catalogo;
 import creacionales.factoryMethod.*;
 import estructurales.decorator.*;
 import estructurales.decorator.Vendible;
 import estructurales.fachada.Facade;
+import estructurales.proxy.Especificacion;
+import estructurales.proxy.EspecificacionProxy;
+import java.awt.Color;
 import java.awt.Image;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import comportamentales.state.*;
 
 /**
 
@@ -31,17 +36,23 @@ public class FrameCatalogoEmpresaSin extends javax.swing.JFrame {
     private int globalcounter;
     private ImageIcon[] imacars;
     private ImageIcon[] imascooters;
+    private ImageIcon[] gifcars;
+    private ImageIcon[] gifscooters;
     private context estado;
-    
+    Especificacion especificacion = new EspecificacionProxy();
+    private generators gen;
+   
     
     public FrameCatalogoEmpresaSin(String selection) {
         initComponents();
+        gen = new generators();
         globalcounter = 0;
         this.selection = selection;
         setLocationRelativeTo(null);
         ejecucion();
         this.TablaCatalogoVehiculos.getTableHeader().setResizingAllowed(false);
         this.TablaCatalogoEscuters.getTableHeader().setResizingAllowed(false);
+        this.LblStatus.setBackground(Color.red);
         estado = new context();
         
     }
@@ -53,11 +64,12 @@ public class FrameCatalogoEmpresaSin extends javax.swing.JFrame {
         scooters = catalogo.getScooters();
         imacars = catalogo.getImageCars();
         imascooters = catalogo.getImageScooters();
+        gifcars = catalogo.getGifCars();
+        gifscooters = catalogo.getGifScooters();
         this.TablaCatalogoVehiculos.setModel(catalogo.tableVehicle());
         this.TablaCatalogoEscuters.setModel(catalogo.tableScooter());
     }
-
-
+ 
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -166,9 +178,9 @@ public class FrameCatalogoEmpresaSin extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(LblImage, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
+                                    .addComponent(LblImage, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
                                     .addComponent(LblStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(51, 51, 51)))))
+                                .addGap(53, 53, 53)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -186,9 +198,9 @@ public class FrameCatalogoEmpresaSin extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(LblDescripcion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(LblImage, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(LblStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(LblImage, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(LblStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -206,7 +218,11 @@ public class FrameCatalogoEmpresaSin extends javax.swing.JFrame {
         descrSortSc descriptors = new descrSortSc();
         int id = this.TablaCatalogoVehiculos.getSelectedRow();
         int ids = this.TablaCatalogoEscuters.getSelectedRow();
-        if(id != 1 && ids == -1){
+        if(id != -1 && ids == -1){
+        ImageIcon img = this.imacars[id];
+        Image escalada = img.getImage().getScaledInstance(this.LblImage.getWidth(), this.LblImage.getHeight(), Image.SCALE_DEFAULT);
+        ImageIcon imgesc = new ImageIcon(escalada);
+        this.LblImage.setIcon(imgesc);
         if(id % 2 == 0){
             AutoDecorador deco = new Mp3Player(auto[id]);
             descriptor.description(this.LblDescripcion, deco.getDescription(),deco.getPrecio(), id+1);
@@ -224,6 +240,10 @@ public class FrameCatalogoEmpresaSin extends javax.swing.JFrame {
         }
         else{
             if(ids != -1 && id == -1){
+              ImageIcon img = this.imascooters[ids];
+              Image escalada = img.getImage().getScaledInstance(this.LblImage.getWidth(), this.LblImage.getHeight(), Image.SCALE_DEFAULT);
+              ImageIcon imgesc = new ImageIcon(escalada);
+              this.LblImage.setIcon(imgesc);
                descriptors.description(this.LblDescripcion, scooters[ids].getDescription(),
                        scooters[ids].getPrecio(), ids+1);
             }
@@ -236,18 +256,7 @@ public class FrameCatalogoEmpresaSin extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_BtnDescripcionActionPerformed
-    
-    private String generateReferenceCode(){
-        String code = "ESF";
-        int iterator = 0;
-        int rand;
-        while (iterator < 7){
-            rand = (int)Math.floor(Math.random()*9);
-            code = code + Integer.toString(rand);
-            iterator++;
-        }
-        return code;
-    }
+
     private void BtnCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCompraActionPerformed
         int id = this.TablaCatalogoVehiculos.getSelectedRow();
         int ids = this.TablaCatalogoEscuters.getSelectedRow();
@@ -270,7 +279,6 @@ public class FrameCatalogoEmpresaSin extends javax.swing.JFrame {
                 "Pago",JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, icon, Options, Options[0]);
         DefaultTableModel mod = (DefaultTableModel)this.TablaCatalogoVehiculos.getModel();
         if(Selection == 0){
-            System.out.println("Paga de contado");
             client = new ClienteContado();
             client.nuevoPedido(currentprice);          
             mod.removeRow(id);
@@ -278,16 +286,16 @@ public class FrameCatalogoEmpresaSin extends javax.swing.JFrame {
             
         }
         else{
-            System.out.println("Paga a crédito");
             client = new ClienteCredito();
             client.nuevoPedido(currentprice);
             mod.removeRow(id);
         }
-    Facade fac = new Facade("Petición usuario "+this.generateReferenceCode(),
-            auto[id].getDescription(),auto[id].getPrecio());
+    Facade fac = new Facade("Petición usuario "+gen.generateReferenceCode(),
+            auto[id].getDescription(),auto[id].getPrecio(),gen.generatePlaca());
+
     fac.incluir();
     fac.vender(); 
-            try {
+          try {
             estado.finalizado(this.LblStatus);
         } catch (InterruptedException ex) {
             System.out.println("Error de hilo");
@@ -313,7 +321,6 @@ public class FrameCatalogoEmpresaSin extends javax.swing.JFrame {
                 "Pago",JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, icon, Options, Options[0]);
         DefaultTableModel mod = (DefaultTableModel)this.TablaCatalogoEscuters.getModel();
         if(Selection == 0){
-            System.out.println("Paga de contado");
             client = new ClienteContado();
             client.nuevoPedido(currentprice);          
             mod.removeRow(ids);
@@ -321,17 +328,16 @@ public class FrameCatalogoEmpresaSin extends javax.swing.JFrame {
                       
         }
         else{
-            System.out.println("Paga a crédito");
             client = new ClienteCredito();
             client.nuevoPedido(currentprice);
             mod.removeRow(ids);
         }
-    Facade fac = new Facade("Petición usuario "+this.generateReferenceCode(),
-            scooters[ids].getDescription(),scooters[ids].getPrecio());
+    Facade fac = new Facade("Petición usuario "+gen.generateReferenceCode(),
+            scooters[ids].getDescription(),scooters[ids].getPrecio(),gen.generatePlaca());
     fac.incluir();
     fac.vender();
-            try {
-            estado.finalizado(this.LblStatus);
+    try {
+         estado.finalizado(this.LblStatus);
         } catch (InterruptedException ex) {
             System.out.println("Error de hilo");
         }
@@ -364,25 +370,22 @@ public class FrameCatalogoEmpresaSin extends javax.swing.JFrame {
         int ids = this.TablaCatalogoEscuters.getSelectedRow();
         
         if(id!=-1 && ids == -1){
-            ImageIcon img = this.imacars[id];
-            Image escalada = img.getImage().getScaledInstance(this.LblImage.getWidth(), this.LblImage.getHeight(), Image.SCALE_DEFAULT);
-            ImageIcon imgesc = new ImageIcon(escalada);
-            this.LblImage.setIcon(imgesc);
+            especificacion.click(gifcars[id]);
+            especificacion.dibuja(gifcars[id]);
         }    
         else{
             if(ids!= -1 && id == -1){           
-                ImageIcon img = this.imascooters[ids];
-                Image escalada = img.getImage().getScaledInstance(this.LblImage.getWidth(), this.LblImage.getHeight(), Image.SCALE_DEFAULT);
-                ImageIcon imgesc = new ImageIcon(escalada);
-                this.LblImage.setIcon(imgesc);
+                especificacion.click(gifscooters[ids]);
+                especificacion.dibuja(gifscooters[ids]);
             }
             else{
                 JOptionPane.showMessageDialog(null,"Quiza hayan elementos seleccionados mutuamente "
                         + "en las dos tablas, intente de nuevo"
                         + "","Advertencia",2);
+                    this.TablaCatalogoEscuters.clearSelection();
+                    this.TablaCatalogoVehiculos.clearSelection();
             }
         }
-
     }//GEN-LAST:event_BtnMuestraActionPerformed
 
     /**
@@ -410,6 +413,8 @@ public class FrameCatalogoEmpresaSin extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(FrameCatalogoEmpresaSin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
