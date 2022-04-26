@@ -17,13 +17,21 @@ import javax.swing.JOptionPane;
 public class OrdenPedido extends Documento{
 
     @Override
-    public void imprime() {
-        System.out.println("Imprime la orden de pedido: " +
-            contenido); 
+    public void imprime(String descripcion, int precio, String placa) {
+        
+        String infofinal = "<html>"
+                + "Compra realizada...<br>"
+                + "Vehículo: "+descripcion+"<br>"
+                + "Precio: "+precio+"<br>"
+                + "Placa: "+placa+"<br>"
+                +"-----------------------<br>"
+                + "Gracias por usar el sistema..."
+                +"</html>";
+        JOptionPane.showMessageDialog(null,infofinal,"mensaje",1);
     }
 
     @Override
-    public void visualiza(String descripcion, int precio) {
+    public void visualiza(String descripcion, int precio, String placa) {
         try{
             FileWriter f = new FileWriter("ordenpedido.txt",true);
             BufferedWriter b = new BufferedWriter(f);
@@ -31,6 +39,7 @@ public class OrdenPedido extends Documento{
             w.println("Orden de pedido ejecutada:");
             w.println("Del vehículo: "+descripcion);
             w.println("De precio: "+precio);
+            w.println("Placa"+ placa);
             w.println("La petición de "+contenido+" se ha realizado la operación con éxito");
             w.println("Gracias por utilizar el sistema...");
             w.close();

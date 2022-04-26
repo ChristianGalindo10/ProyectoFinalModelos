@@ -14,6 +14,17 @@ import javax.swing.ImageIcon;
  */
 public class featuresSorterCar {
     
+    private String marca = sortMarca();
+
+    public String getMarca() {
+        return marca;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+    
+    
     public String sortMarca(){
         String [] m = {"Ford","Mazda","Toyota","Audi"};
         int rand = (int)Math.floor(Math.random()*4);
@@ -26,8 +37,31 @@ public class featuresSorterCar {
         return m[rand];
     }
     
+    public ImageIcon sortGif(){
+        String marca = this.marca;
+        ImageIcon g;
+        switch (marca){
+            case "Ford":
+                g = new ImageIcon(getClass().getResource("/img/gifford.gif"));
+                break;
+            case "Mazda":
+                g = new ImageIcon(getClass().getResource("/img/gifmazda.gif"));
+                break;
+            case "Toyota":
+                g = new ImageIcon(getClass().getResource("/img/giftoyota.gif"));
+                break;
+            case "Audi":
+                g = new ImageIcon(getClass().getResource("/img/gifaudi.gif"));
+                break;
+            default:
+                g = new ImageIcon();
+                break;
+        }
+        return g;
+    }
+    
     public ImageIcon sortImage(){
-        String marca = sortMarca();
+        String marca = this.marca;
         int rand = (int)Math.floor(Math.random()*5);
         ImageIcon[] k = new ImageIcon[5];
         if(marca.equals("Ford")){
@@ -58,6 +92,8 @@ public class featuresSorterCar {
             k[3] = new ImageIcon(getClass().getResource("/img/audi4.jpg"));
             k[4] = new ImageIcon(getClass().getResource("/img/audi5.jpg"));
         }
+        
+        this.marca = sortMarca();
         return k[rand];
     }
     

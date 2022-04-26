@@ -19,14 +19,32 @@ public abstract class Automovil implements Vendible{
     protected int potencia;
     protected double espacio;
     protected int precio;
+    protected ImageIcon gif;
 
-    public Automovil(String marca,String modelo, ImageIcon icono, int potencia, double espacio,int precio) {
+    public ImageIcon getIcono() {
+        return icono;
+    }
+
+    public void setIcono(ImageIcon icono) {
+        this.icono = icono;
+    }
+
+    public ImageIcon getGif() {
+        return gif;
+    }
+
+    public void setGif(ImageIcon gif) {
+        this.gif = gif;
+    }
+
+    public Automovil(String marca,String modelo, ImageIcon gif, ImageIcon icono, int potencia, double espacio,int precio) {
         this.marca = marca;
         this.modelo = modelo;
         this.icono = icono;
         this.potencia = potencia;
         this.espacio = espacio;
         this.precio = precio;
+        this.gif = gif;
     }
 
     public String getMarca() {

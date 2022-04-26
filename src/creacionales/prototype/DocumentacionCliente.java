@@ -13,10 +13,12 @@ public class DocumentacionCliente extends Documentacion{
     
     private String descripcion;
     private int precio;
+    private String placa;
 
-    public DocumentacionCliente(String informacion, String descripcion, int precio) {
+    public DocumentacionCliente(String informacion, String descripcion, int precio, String placa) {
         this.descripcion = descripcion;
         this.precio = precio;
+        this.placa = placa;
         documentos = new ArrayList<Documento>();
         DocumentacionBlanco documentacionBlanco = DocumentacionBlanco.Instance();
         List<Documento> documentosEnBlanco = documentacionBlanco.getDocumentos();
@@ -28,14 +30,17 @@ public class DocumentacionCliente extends Documentacion{
     }
     
     public void visualiza(){
-        for (Documento documento: documentos)
-            documento.visualiza(descripcion, precio);
+        Documento doc = documentos.get(documentos.size()-3);
+        doc.visualiza(descripcion, precio, placa);
+        doc = documentos.get(documentos.size()-2);
+        doc.visualiza(descripcion, precio, placa);
+        doc = documentos.get(documentos.size()-1);
+        doc.visualiza(descripcion, precio, placa);
     }
 
-    public void imprime(){
-        
-        for (Documento documento: documentos)
-            documento.imprime();
+    public void imprime(){      
+        Documento doc = documentos.get(documentos.size()-3);
+        doc.imprime(descripcion, precio, placa);
     } 
     
 }

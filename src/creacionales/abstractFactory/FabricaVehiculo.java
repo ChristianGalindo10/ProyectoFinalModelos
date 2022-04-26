@@ -13,6 +13,6 @@ import javax.swing.ImageIcon;
  */
 public interface FabricaVehiculo {
     
-    Automovil creaAutomovil(String marca,String modelo,ImageIcon icon,int potencia,double espacio,int precio);
-    Scooter creaScooter(String modelo,ImageIcon icon,int potencia, int precio);
+    Automovil creaAutomovil(String marca,String modelo,ImageIcon gif, ImageIcon icon,int potencia,double espacio,int precio);
+    Scooter creaScooter(String modelo,ImageIcon gif, ImageIcon icon,int potencia, int precio);
 }

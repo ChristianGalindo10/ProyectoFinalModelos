@@ -14,13 +14,13 @@ import javax.swing.ImageIcon;
 public class FabricaVehiculoElectricidad implements FabricaVehiculo {
 
     @Override
-    public Automovil creaAutomovil(String marca,String modelo, ImageIcon icon, int potencia, double espacio,int precio) {
-        return new AutomovilElectricidad(marca,modelo,icon,potencia,espacio,precio);
+    public Automovil creaAutomovil(String marca,String modelo, ImageIcon gif, ImageIcon icon, int potencia, double espacio,int precio) {
+        return new AutomovilElectricidad(marca,modelo,gif,icon,potencia,espacio,precio);
     }
 
     @Override
-    public Scooter creaScooter(String modelo, ImageIcon icon, int potencia, int precio) {
-        return new ScooterElectricidad(modelo,icon,potencia, precio);
+    public Scooter creaScooter(String modelo, ImageIcon gif, ImageIcon icon, int potencia, int precio) {
+        return new ScooterElectricidad(modelo,gif, icon,potencia, precio);
     }
 
 

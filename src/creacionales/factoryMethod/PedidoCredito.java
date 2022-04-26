@@ -40,7 +40,8 @@ public class PedidoCredito extends Pedido{
             JOptionPane.showMessageDialog(null,"ups, el medio de pago o la tarjeta de crédito no es válido"
             ,"Error",0);
         }
-        return m.verificarForm(dit, pag);
+            return m.verificarForm(dit, pag);
+     
         }catch(Exception e){
             JOptionPane.showMessageDialog(null,"Acción cancelada","Advertencia",2);
             return false;
@@ -50,7 +51,7 @@ public class PedidoCredito extends Pedido{
     @Override
     public void paga() {
         calculateInterface calc;
-        calc = new calculateExtranjero();
+        calc = new calculateViaCredito();
         this.importe = calc.calcularImporte(importe);
         JOptionPane.showMessageDialog(null,"El pago del pedido a crédito por "
                 +importe+ " se ha realizado","Éxito",1);

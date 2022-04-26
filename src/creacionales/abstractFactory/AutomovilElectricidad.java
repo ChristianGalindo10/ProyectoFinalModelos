@@ -13,8 +13,8 @@ import javax.swing.ImageIcon;
  */
 public class AutomovilElectricidad extends Automovil{
 
-    public AutomovilElectricidad(String marca,String modelo, ImageIcon icon, int potencia, double espacio,int precio) {
-        super(marca,modelo, icon, potencia, espacio,precio);
+    public AutomovilElectricidad(String marca,String modelo,ImageIcon gif,ImageIcon icon, int potencia, double espacio,int precio) {
+        super(marca,modelo, gif, icon, potencia, espacio,precio);
     }
 
 

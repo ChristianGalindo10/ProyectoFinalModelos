@@ -41,6 +41,9 @@ public class Catalogo {
     private featuresSorterCar fsc;
     private featuresSorterScooter fss;
     
+    private ImageIcon [] gifcar;
+    private ImageIcon [] gifscooter;
+    
     
     public Catalogo(){
         fsc = new featuresSorterCar();
@@ -54,6 +57,9 @@ public class Catalogo {
         
         cadenasvehiculostipo = new String[nAutos];
         cadenasescuterstipo = new String[nScooters];
+        
+        gifcar = new ImageIcon[nAutos];
+        gifscooter = new ImageIcon[nScooters];
     }
     
     public void solicita(String seleccion){
@@ -77,18 +83,20 @@ public class Catalogo {
         is = z.iterator();
                
         for (int i = 0; i < nAutos; i++) {
-            autos[i] = fabrica.creaAutomovil(fsc.sortMarca(),fsc.sortModelo(), fsc.sortImage(),fsc.sortPotencia()
+            autos[i] = fabrica.creaAutomovil(fsc.getMarca(),fsc.sortModelo(),fsc.sortGif(), fsc.sortImage(),fsc.sortPotencia()
                     , fsc.sortEspacio(),fsc.sortPrecio());
             autovendible[i] = autos[i];
             iconcars[i] = autos[i].getIcon();
+            gifcar[i] = autos[i].getGif();
         }
         
 
         
         for (int i = 0; i < nScooters; i++) {
-           scooters[i] = fabrica.creaScooter(fss.sortModelo(), fss.sortImage(), fss.sortPotencia(),fss.sortPrecio());
+           scooters[i] = fabrica.creaScooter(fss.sortModelo(), fss.sortGif(), fss.sortImage(), fss.sortPotencia(),fss.sortPrecio());
            scootervendible[i]= scooters[i];
            iconscooters[i] = scooters[i].getIcon();
+           gifscooter[i] = scooters[i].getGif();
         }
         
         for(Vendible auto:autovendible){
@@ -121,7 +129,7 @@ public class Catalogo {
             
             
             
-            vb.print();  
+            //vb.print();  
     }
         for(Vendible scooter:scootervendible){
             z.add(scooter.getDescription());
@@ -141,7 +149,7 @@ public class Catalogo {
             this.cadenasescuterstipo[8] = vs.getName();
             this.cadenasescuterstipo[9] = vs.getName();
             
-            vs.print();
+            //vs.print();
         
         }
     }
@@ -174,10 +182,7 @@ public DefaultTableModel tableScooter(){
                         return false;
                     }
             };
-        String[] fila = this.cadenasescuters;
-        String[] filaaux = this.cadenasescuterstipo;
-        System.out.println(Arrays.toString(fila));
-        System.out.println(Arrays.toString(filaaux));
+
         for (int i = 0; i < nScooters; i++){
             String[] filax = new String[3];
             filax[0] = Integer.toString(i+1);
@@ -203,6 +208,14 @@ public DefaultTableModel tableScooter(){
     
     public ImageIcon[] getImageScooters(){
         return iconscooters;
+    }
+    
+    public ImageIcon[] getGifCars(){
+        return gifcar;
+    }
+    
+    public ImageIcon[] getGifScooters(){
+        return gifscooter;
     }
     
 }

@@ -20,6 +20,14 @@ public class featuresSorterScooter {
         return m[rand];
     }
     
+    public ImageIcon sortGif(){
+        ImageIcon[] i = {new ImageIcon(getClass().getResource("/img/gifscooter1.gif")),
+        new ImageIcon(getClass().getResource("/img/gifscooter2.gif")),
+        new ImageIcon(getClass().getResource("/img/gifscooter3.gif"))};
+        int rand = (int) Math.floor(Math.random()*3);
+        return i[rand];
+    }
+    
     public ImageIcon sortImage(){
         ImageIcon[] i = {new ImageIcon(getClass().getResource("/img/scooter1.jpg")),
         new ImageIcon(getClass().getResource("/img/scooter2.jpg")),

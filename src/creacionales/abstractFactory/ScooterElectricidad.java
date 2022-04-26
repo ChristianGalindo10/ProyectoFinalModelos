@@ -13,8 +13,8 @@ import javax.swing.ImageIcon;
  */
 public class ScooterElectricidad extends Scooter {
 
-    public ScooterElectricidad(String modelo, ImageIcon icono, int potencia, int precio) {
-        super(modelo, icono, potencia, precio);
+    public ScooterElectricidad(String modelo, ImageIcon gif, ImageIcon icono, int potencia, int precio) {
+        super(modelo, gif, icono, potencia, precio);
     }
 
     @Override

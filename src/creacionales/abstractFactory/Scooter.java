@@ -18,12 +18,30 @@ public abstract class Scooter implements Vendible {
     protected ImageIcon icono;
     protected int potencia;
     protected int precio;
+    protected ImageIcon gif;
 
-    public Scooter(String modelo, ImageIcon icon, int potencia, int precio) {
+    public Scooter(String modelo, ImageIcon gif, ImageIcon icon, int potencia, int precio) {
         this.modelo = modelo;
         this.icono = icon;
         this.potencia = potencia;
         this.precio = precio;
+        this.gif = gif;
+    }
+
+    public ImageIcon getIcono() {
+        return icono;
+    }
+
+    public void setIcono(ImageIcon icono) {
+        this.icono = icono;
+    }
+
+    public ImageIcon getGif() {
+        return gif;
+    }
+
+    public void setGif(ImageIcon gif) {
+        this.gif = gif;
     }
     
     public abstract String mostrarCaracteristicas();

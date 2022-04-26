@@ -29,7 +29,7 @@ public abstract class Documento implements Cloneable{
         contenido = informacion;
     }
 
-    public abstract void imprime();
-    public abstract void visualiza(String descripcion , int precio); 
+    public abstract void imprime(String descripcion, int precio, String placa);
+    public abstract void visualiza(String descripcion , int precio, String placa); 
     
 }
