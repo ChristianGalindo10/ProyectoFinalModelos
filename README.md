@@ -15,5 +15,8 @@ Estos documentos son generados como archivos de texto plano (.txt) por facilidad
 
 ## Resultado
 
-![Resultado](https://github.com/ChristianGalindo10/GameStore-FRONT/blob/master/Readme_assets/VideoFinal.gif)
+![Resultado1](https://github.com/ChristianGalindo10/ProyectoFinalModelos/blob/master/src/img/r1.png)
+![Resultado2](https://github.com/ChristianGalindo10/ProyectoFinalModelos/blob/master/src/img/r2.png)
+![Resultado3](https://github.com/ChristianGalindo10/ProyectoFinalModelos/blob/master/src/img/r3.png)
+![Resultado4](https://github.com/ChristianGalindo10/ProyectoFinalModelos/blob/master/src/img/r4.png)
 
